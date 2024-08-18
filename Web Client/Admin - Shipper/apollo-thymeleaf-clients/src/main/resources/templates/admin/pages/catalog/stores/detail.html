@@ -1,0 +1,217 @@
+<th:block th:fragment="styles">
+  <link th:href="@{/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+</th:block>
+
+<th:block th:fragment="scripts">
+  <script th:src="@{/plugins/custom/datatables/datatables.bundle.js}"></script>
+  <script th:src="@{/js/custom/catalog/categories.js}"></script>
+  <script th:src="@{/plugins/custom/fslightbox/fslightbox.bundle.js}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlayLinks = document.querySelectorAll('.overlay');
+
+      overlayLinks.forEach(function (link) {
+        var imageUrl = link.getAttribute('href');
+
+        var divElement = link.querySelector('.overlay-wrapper');
+
+        if (divElement && imageUrl) {
+          divElement.style.backgroundImage = 'url(' + imageUrl + ')';
+        }
+      });
+    });
+  </script>
+</th:block>
+
+<th:block th:fragment="content">
+
+  <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+    <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
+          href="#kt_ecommerce_add_product_general" aria-selected="true" role="tab">General</a>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <a class="nav-link text-active-primary pb-4 " aria-selected="false" data-bs-toggle="tab"
+          href="#kt_ecommerce_add_product_advanced" role="tab" tabindex="-1">Store Categories</a>
+      </li>
+
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade active show" id="kt_ecommerce_add_product_general" role="tab-panel">
+        <div class="d-flex flex-column gap-7 gap-lg-10">
+
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Home Image</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="mb-10 fv-row fv-plugins-icon-container">
+
+                <div class="card-xl-stretch me-md-6">
+                  <a class="d-block overlay mb-4" data-fslightbox="lightbox-home-image" th:href="${store.homeImage}">
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px">
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Deal Image</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="mb-10 fv-row fv-plugins-icon-container">
+
+                <div class="card-xl-stretch me-md-6">
+                  <a class="d-block overlay mb-4" data-fslightbox="lightbox-home-image" th:href="${store.dealsImage}">
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px">
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Deal Square Image</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="mb-10 fv-row fv-plugins-icon-container">
+
+                <div class="card-xl-stretch me-md-6">
+                  <a class="d-block overlay mb-4" data-fslightbox="lightbox-home-image"
+                    th:href="${store.dealsSquareImage}">
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px">
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Interactive Image</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="mb-10 fv-row fv-plugins-icon-container">
+
+                <div class="card-xl-stretch me-md-6">
+                  <a class="d-block overlay mb-4" data-fslightbox="lightbox-home-image"
+                    th:href="${store.interactiveImage}">
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px">
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Logo</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="mb-10 fv-row fv-plugins-icon-container">
+
+                <div class="card-xl-stretch me-md-6">
+                  <a class="d-block overlay mb-4" data-fslightbox="lightbox-home-image" th:href="${store.logo}">
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px">
+                    </div>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="kt_ecommerce_add_product_advanced" role="tab-panel">
+        <div class="d-flex flex-column gap-7 gap-lg-10">
+          <div class="card card-flush">
+            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+              <div class="card-title">
+                <div class="d-flex align-items-center position-relative my-1">
+                  <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                  </i>
+                  <input type="text" data-kt-ecommerce-category-filter="search"
+                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Store Category" />
+                </div>
+              </div>
+
+              <div class="card-toolbar">
+<!--                <button type="button" class="btn btn-primary" data-bs-toggle="modal"-->
+<!--                  data-bs-target="#modal_add_stores_categories">-->
+<!--                  <i class="ki-duotone ki-plus fs-2"></i> Add New-->
+<!--                </button>-->
+                <!-- Adding Store Category -->
+                <a th:href="@{/dashboard/catalog/stores/create-store-category}" class="btn btn-primary">Add Store Category</a>
+
+              </div>
+            </div>
+
+            <div class="card-body pt-0">
+
+              <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
+                <thead>
+                  <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-250px">Category</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                  <tr th:each="i : ${categories}">
+                    <td>
+                      <div class="d-flex">
+                        <div class="ms-5">
+                          <a th:href="@{/dashboard/catalog/stores/{id}(id=${i.id})}"
+                            class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
+                            data-kt-ecommerce-category-filter="category_name" th:text="${i.name}"></a>
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</th:block>

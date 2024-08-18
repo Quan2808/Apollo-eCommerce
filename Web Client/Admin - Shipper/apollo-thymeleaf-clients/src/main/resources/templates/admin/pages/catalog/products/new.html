@@ -1,0 +1,133 @@
+<th:block th:fragment="styles">
+    <link th:href="@{/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css"/>
+    <style>
+        .image-input-placeholder {
+            background-image: url('/media/illustrations/blank-image.svg');
+        }
+
+        [data-bs-theme="dark"] .image-input-placeholder {
+            background-image: url('/media/illustrations/blank-image-dark.svg');
+        }
+    </style>
+</th:block>
+<th:block th:fragment="scripts">
+    <script th:src="@{/js/custom/catalog/save-product.js}"></script>
+    <script th:src="@{/plugins/custom/formrepeater/formrepeater.bundle.js}"></script>
+    <script th:src="@{/plugins/custom/datatables/datatables.bundle.js}"></script>
+</th:block>
+<th:block th:fragment="content">
+    <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
+          th:object="${productDTO}" method="POST" enctype="multipart/form-data"
+          th:action="@{/dashboard/catalog/products/create}" th:data-kt-redirect="@{/dashboard/catalog/products}">
+
+        <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+            <div class="card card-flush py-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Thumbnail</h2>
+                    </div>
+                </div>
+                <div class="card-body text-center pt-0">
+                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                         data-kt-image-input="true">
+                        <div class="image-input-wrapper w-150px h-150px"></div>
+                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                               data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change thumbnail">
+                            <i class="ki-duotone ki-pencil fs-7">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            <input th:field="*{mainPicturePatch}" type="file" name="mainPicturePatch" accept=".png, .jpg, .jpeg"/>
+                            <input type="hidden" name="mainPicture_remove"/>
+                        </label>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                              data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel thumbnail">
+                        <i class="ki-duotone ki-cross fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </span>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                              data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove thumbnail">
+                        <i class="ki-duotone ki-cross fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </span>
+                    </div>
+                    <div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <div class="card card-flush py-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>General</h2>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="mb-10 fv-row">
+                        <label class="required form-label">Product Name</label>
+                        <input type="text" name="title" class="form-control mb-2" placeholder="Product name"
+                               th:field="*{title}"/>
+                        <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
+                    </div>
+                    <div>
+                        <label class="form-label">Description</label>
+                        <textarea id="kt_ecommerce_add_product_description" name="description" class="form-control mb-2" rows="5"
+                                  th:field="*{description}"></textarea>
+                        <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-flush py-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Product Details</h2>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Categories</label>
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                    th:field="*{category.id}">
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.attribute}"></option>
+                            </select>
+                            <div class="text-muted fs-7 mb-7">Add product to a category.</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Store</label>
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                    th:field="*{store.id}">
+                                <option th:each="store : ${stores}" th:value="${store.id}" th:text="${store.name}"></option>
+                            </select>
+                            <div class="text-muted fs-7 mb-7">Add product to a store.</div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Store Category</label>
+                            <select class="form-select mb-2" data-control="select2" data-placeholder="Select an option"
+                                    th:field="*{storeCategory.id}">
+                                <option th:each="storeCategory : ${store_categories}" th:value="${storeCategory.id}" th:text="${storeCategory.name}"></option>
+                            </select>
+                            <div class="text-muted fs-7 mb-7">Add product to a store category.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a th:href="@{/dashboard/catalog/products}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+                <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                    <span class="indicator-label">Save Changes</span>
+                    <span class="indicator-progress">Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+
+</th:block>

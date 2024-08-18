@@ -1,0 +1,147 @@
+<th:block th:fragment="styles">
+    <link th:href="@{/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css" />
+</th:block>
+<th:block th:fragment="scripts">
+    <script th:src="@{/plugins/custom/datatables/datatables.bundle.js}"></script>
+    <script th:src="@{/js/custom/sale/orders/listing.js}"></script>
+</th:block>
+<section th:fragment="content">
+
+    <div class="card card-flush">
+        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+            <div class="card-title">
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span class="path1"></span><span
+                            class="path2"></span></i> <input type="text" data-kt-ecommerce-order-filter="search"
+                                                             class="form-control form-control-solid w-250px ps-12" placeholder="Search Order" />
+                </div>
+            </div>
+
+            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                <div class="input-group w-250px">
+                    <input class="form-control form-control-solid rounded rounded-end-0" placeholder="Pick date range"
+                           id="kt_ecommerce_sales_flatpickr" />
+                    <button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
+                        <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    </button>
+                </div>
+
+                <div class="w-100 mw-150px">
+                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+                            data-placeholder="Status" data-kt-ecommerce-order-filter="status">
+                        <option></option>
+                        <option value="all">All</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="ACCEPTED">ACCEPTED</option>
+                        <option value="ONGOING">ONGOING</option>
+                        <option value="COMPLETED">COMPLETED</option>
+                        <option value="CANCEL">CANCEL</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body pt-0">
+
+            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_sales_table">
+                <thead>
+                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-50px">Order ID</th>
+                    <th class="min-w-125px">Customer</th>
+                    <th class="text-end min-w-70px">Status</th>
+                    <th class="text-end min-w-100px">Total</th>
+                    <th class="text-center min-w-100px">QTY</th>
+                    <th class="text-end min-w-100px">Date Added</th>
+                    <th class="text-end min-w-100px">Delivery date</th>
+                    <th class="text-end min-w-100px">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                <tr th:each="i : ${orders}">
+                    <td class="text-center pe-0" data-kt-ecommerce-order-filter="order_id">
+                        <a th:href="@{/dashboard/sales/order/detail-order/{orderId}(orderId=${i.id})}"
+                           th:text="${i.id}" class="text-gray-800 text-hover-primary fw-bold">
+                        </a>
+                    </td>
+                    <td class="text-start pe-0">
+                        <span class="fw-bold" th:text="${i.user.clientName}"></span>
+                    </td>
+                    <td class="text-center pe-0" th:data-order="${i.status}">
+                        <div th:switch="${i.status}">
+                            <div th:case="'PENDING'" class="badge badge-light-warning" th:text="${i.status}"></div>
+                            <div th:case="'ACCEPTED'" class="badge badge-light-primary" th:text="${i.status}"></div>
+                            <div th:case="'ONGOING'" class="badge badge-light-info" th:text="${i.status}"></div>
+                            <div th:case="'COMPLETED'" class="badge badge-light-success" th:text="${i.status}">
+                            </div>
+                            <div th:case="'CANCEL'" class="badge badge-light-danger" th:text="${i.status}"></div>
+                            <div th:case="*" class="badge badge-light-secondary" th:text="${i.status}"></div>
+                        </div>
+                    </td>
+                    <td class="text-end pe-0">
+                            <span class="fw-bold"
+                                  th:text="'$ ' + ${#numbers.formatDecimal(i.orderTotal, 0, 'COMMA', 2, 'POINT')}"></span>
+                    </td>
+                    <td class="text-center">
+                        <span class="fw-bold" th:text="${i.quantity}"></span>
+                    </td>
+                    <td class="text-end" th:data-order="${i.orderDate}">
+                        <span class="fw-bold" th:text="${i.orderDate}"></span>
+                    </td>
+                    <td class="text-end" th:data-order="${i.deliveryDate}">
+                        <span class="fw-bold" th:text="${i.deliveryDate}"></span>
+                    </td>
+                    <td class="text-end">
+                        <a th:href="@{/dashboard/sales/order/detail-order/{orderId}(orderId=${i.id})}"
+                           class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <a th:href="@{/dashboard/sales/order/cancel}">
+            <button type="button" class="btn btn-lg btn-success btn-active-light-success">
+                Cancel Page
+            </button>
+        </a>
+    </div>
+    <div class="card-body pt-0">
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
+            <thead>
+                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th class="w-10px pe-2">ID</th>
+                    <th class="min-w-150px">Address</th>
+                    <th class="min-w-150px">Product</th>
+                    <th class="min-w-150px">Date</th>
+                    <th class="text-end min-w-70px">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="fw-semibold text-gray-600">
+                <tr th:if="${#lists.isEmpty(orders)}">
+                    <td colspan="5" class="text-center">THERE ARE NO NEW ORDERS</td>
+                </tr>
+                <tr th:each="order : ${order_pending}">
+                    <td th:text="${order.id}"></td>
+                    <td
+                        th:text="${order.address.street + ', ' + order.address.ward + ', ' + order.address.district + ', ' + order.address.city}">
+                    </td>
+                    <td th:text="${order?.variant?.product?.title ?: 'N/A'}"></td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td class="text-end">
+                        <a th:href="@{/dashboard/sales/order/detail-order/{orderId}(orderId=${order.id})}">
+                            <button type="submit"
+                                class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center">
+                                Details
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+</section>

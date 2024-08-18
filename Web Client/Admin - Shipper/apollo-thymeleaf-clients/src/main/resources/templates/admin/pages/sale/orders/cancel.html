@@ -1,0 +1,33 @@
+<th:block th:fragment="styles"></th:block>
+<th:block th:fragment="scripts"></th:block>
+<section th:fragment="content">
+    <div class="card-body pt-0">
+        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
+            <thead>
+            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                <th class="w-10px pe-2">ID</th>
+                <th class="min-w-250px">Order Date</th>
+                <th class="min-w-150px">Status</th>
+                <th class="text-end min-w-70px">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="fw-semibold text-gray-600">
+            <tr th:if="${#lists.isEmpty(orders)}">
+                <td colspan="5" class="text-center">NOTHING HERE</td>
+            </tr>
+            <tr th:each="orderDelivery : ${orders}">
+                <td th:text="${orderDelivery.id}"></td>
+                <td th:text="${#dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy')}"></td>
+                <td th:text="${orderDelivery.status}"></td>
+                <td class="text-end">
+                    <a th:href="@{/dashboard/catalog/order/detail-cancel/{orderId}(orderId=${orderDelivery.id})}">
+                        <button type="submit" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center">
+                            Details
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

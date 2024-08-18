@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Store Category</title>
+    <th:block th:fragment="styles">
+        <link th:href="@{/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css"/>
+    </th:block>
+    <th:block th:fragment="scripts">
+        <script th:src="@{/plugins/custom/datatables/datatables.bundle.js}"></script>
+        <script th:src="@{/js/custom/catalog/categories.js}"></script>
+        <script th:src="@{/plugins/custom/fslightbox/fslightbox.bundle.js}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var overlayLinks = document.querySelectorAll('.overlay');
+                overlayLinks.forEach(function (link) {
+                    var imageUrl = link.getAttribute('href');
+                    var divElement = link.querySelector('.overlay-wrapper');
+                    if (divElement && imageUrl) {
+                        divElement.style.backgroundImage = 'url(' + imageUrl + ')';
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="container">
+        <div class="card card-flush">
+            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                <div class="card-title">
+                    <h1>Create Store Category</h1>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <form th:action="@{/dashboard/catalog/stores/create-store-categories}" th:object="${addStoreCateRequest}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="storeId" class="form-label required fw-semibold fs-6">Choose Your Store:</label>
+                        <select id="storeId" th:field="*{storeId}" class="form-control form-control-solid" required>
+                            <option value="" disabled selected>Select a store</option>
+                            <option th:each="store : ${stores}" th:value="${store.id}" th:text="${store.name}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label required fw-semibold fs-6">Input Your Store Category Name:</label>
+                        <input type="text" id="name" th:field="*{name}" class="form-control form-control-solid" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="heroImage" class="form-label fw-semibold fs-6">Store Category Hero Image:</label>
+                        <input type="file" id="heroImage" th:field="*{heroImage}" class="form-control form-control-solid">
+                    </div>
+                    <div class="mb-3">
+                        <label for="squareImage" class="form-label fw-semibold fs-6">Store Category Square Image:</label>
+                        <input type="file" id="squareImage" th:field="*{squareImage}" class="form-control form-control-solid">
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentStoreCategory" class="form-label fw-semibold fs-6">Choose Your Parent Store Category (Optional):</label>
+                        <select id="parentStoreCategory" th:field="*{parentStoreCategory.id}" class="form-control form-control-solid">
+                            <option value="" disabled selected>Select a parent category</option>
+                            <option value=0>None</option>
+                            <option th:each="category : ${storeCategories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

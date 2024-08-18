@@ -1,0 +1,73 @@
+<!--src/main/resources/templates/admin/pages/catalog/products/variant-image-list.html-->
+<th:block th:fragment="styles">
+    <link th:href="@{/plugins/custom/datatables/datatables.bundle.css}" rel="stylesheet" type="text/css"/>
+    <style>
+        .image-input-placeholder {
+            background-image: url('/media/illustrations/blank-image.svg');
+        }
+
+        [data-bs-theme="dark"] .image-input-placeholder {
+            background-image: url('/media/illustrations/blank-image-dark.svg');
+        }
+    </style>
+</th:block>
+<th:block th:fragment="scripts">
+    <script th:src="@{/js/custom/catalog/save-product.js}"></script>
+    <script th:src="@{/plugins/custom/formrepeater/formrepeater.bundle.js}"></script>
+    <script th:src="@{/plugins/custom/datatables/datatables.bundle.js}"></script>
+</th:block>
+<th:block th:fragment="content">
+    <div class="container">
+        <div class="card card-flush py-4">
+            <div class="card-header">
+                <div class="card-title">
+                    <h1>Update Variant Image List</h1>
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <form th:action="@{/dashboard/catalog/products/upload}" method="post" enctype="multipart/form-data" class="form d-flex flex-column gap-5">
+
+                    <!-- Display Variant ID -->
+                    <div class="mb-3">
+                        <label class="form-label">Variant ID:</label>
+                        <input type="text" name="variantIdDisplay" class="form-control" th:value="${variantId}" readonly/>
+                    </div>
+
+                    <!-- Variant ID Input -->
+                    <div class="mb-3">
+                        <label class="required form-label">Please Confirm Variant ID Number:</label>
+                        <input type="text" name="variantId" class="form-control" placeholder="Variant ID" required/>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="mb-3">
+                        <label class="required form-label">Select Images:</label>
+                        <input type="file" name="files" multiple class="form-control"/>
+                    </div>
+
+
+
+                    <!-- Submit Button -->
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+
+                <!-- Display Uploaded Image IDs -->
+                <div th:if="${imageIds != null}" class="mt-5">
+                    <h3>Uploaded Image IDs:</h3>
+                    <ul class="list-group">
+                        <li th:each="id : ${imageIds}" class="list-group-item" th:text="${id}">Image ID</li>
+                    </ul>
+                </div>
+
+                <!-- Display Message -->
+                <div th:if="${message != null}" class="mt-3">
+                    <p class="text-muted" th:text="${message}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</th:block>

@@ -1,0 +1,62 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Build outputs
+target/
+build/
+
+# Maven
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.debug
+.mvn/
+
+# Gradle
+.gradle/
+build/
+
+# Log files
+*.log
+
+# Spring Boot
+*.jar
+*.war
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VSCode
+.vscode/
+
+# User-specific files
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+
+# Upload directories
+upload/
+
+# Analysis files
+*.hprof
+
+# Environment files
+.env
+
+# Database files
+*.db
+*.sql
+*.sqlite
+*.sqlite3
