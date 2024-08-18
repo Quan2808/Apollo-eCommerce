@@ -60,3 +60,6 @@ upload/
 *.sql
 *.sqlite
 *.sqlite3
+
+# Spring Boot properties files
+src/main/resources/application.properties
