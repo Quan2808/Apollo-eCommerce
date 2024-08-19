@@ -21,10 +21,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
+        // Kiểm tra xem attribute đã tồn tại chưa
+        if (categoryRepository.existsByAttribute(categoryDTO.getAttribute())) {
+            throw new DuplicateCategoryAttributeException("Category attribute already exists: " + categoryDTO.getAttribute());
+        }
+
         Category category = convert.dtoToEntity(categoryDTO);
         Category savedCategory = categoryRepository.save(category);
         return convert.entityToDTO(savedCategory);
     }
+
+    public class DuplicateCategoryAttributeException extends RuntimeException {
+        public DuplicateCategoryAttributeException(String message) {
+            super(message);
+        }
+    }
+
 
     @Override
     public List<CategoryDTO> getCategories() {

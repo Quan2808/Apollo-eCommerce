@@ -34,11 +34,11 @@ function FooterMiddle() {
                 <p className='flex gap-1 items-center justify-center border border-gray-500
                 hover:border-amazon_yellow cursor-pointer duration-200 px-2 py-1'>English</p>
             </div>
-            <div className='flex gap-1 items-center justify-center border
-             border-gray-500 hover:border-amazon_yellow cursor-pointer duration-200 px-2 py-1'> 
-            <img className='w-6' src={vnFlag} alt='flagImg'></img>
-            <p>Vietnam</p>
-            </div>
+            {/*<div className='flex gap-1 items-center justify-center border*/}
+            {/* border-gray-500 hover:border-amazon_yellow cursor-pointer duration-200 px-2 py-1'> */}
+            {/*<img className='w-6' src={vnFlag} alt='flagImg'></img>*/}
+            {/*<p>Vietnam</p>*/}
+            {/*</div>*/}
       </div>
       {/* Bottom end */}
     </div>

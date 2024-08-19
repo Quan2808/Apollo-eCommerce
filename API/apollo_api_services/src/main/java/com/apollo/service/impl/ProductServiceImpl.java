@@ -64,6 +64,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getAllProductDtos() {
         List<Product> products = productRepository.findAll();
+        // Sắp xếp danh sách sản phẩm theo thứ tự id giảm dần
+        products.sort((p1, p2) -> Long.compare(p2.getId(), p1.getId()));
+
         List<ProductDTO> productDTOS = productConverterImpl.entitiesToDTOs(products);
         List<StoreDTO> storeDTOS = new ArrayList<>();
         for (Product product : products) {

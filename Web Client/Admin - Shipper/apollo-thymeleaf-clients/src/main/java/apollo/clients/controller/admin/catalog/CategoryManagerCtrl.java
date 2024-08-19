@@ -65,8 +65,20 @@ public class CategoryManagerCtrl {
             categoryMap.put("attribute", categoryDTO.getAttribute());
             categoryService.createCategory(categoryMap);
             return "redirect:/dashboard/catalog/categories";
-        } catch (Exception e) {
+        } catch (DuplicateCategoryAttributeException e) {
+            // Bắt lỗi khi attribute bị trùng
+            model.addAttribute("attributeError", "Category attribute already exists: " + categoryDTO.getAttribute());
             return newCategoryForm(model);
+        } catch (Exception e) {
+            // Bắt lỗi chung
+            model.addAttribute("error", "Failed to create category: " + e.getMessage());
+            return newCategoryForm(model);
+        }
+    }
+
+    public class DuplicateCategoryAttributeException extends RuntimeException {
+        public DuplicateCategoryAttributeException(String message) {
+            super(message);
         }
     }
 

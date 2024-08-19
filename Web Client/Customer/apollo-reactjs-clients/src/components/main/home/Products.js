@@ -45,35 +45,25 @@ function Products() {
                 ></img>
                 <ul
                     className="w-full h-36 bg-gray-100 absolute bottom-[-170px] flex flex-col items-end justify-center gap-2
-            font-titleFont px-2 border-1 border-r group-hover:bottom-0 duration-700"
+  font-titleFont px-2 border-1 border-r group-hover:bottom-0 duration-700"
                 >
-                  <li className="productLi">
-                    Compare
-                    <span>
-                  <ApiIcon />
-                </span>
-                  </li>
                   <Link to={`/product/${product.id}`} className="productLi">
-                <span onClick={() => {
-                  dispatch(setStore(product.store.id));
-                }}>
-                  View Details
-                  <ArrowCircleRightIcon />
-                </span>
+    <span
+        onClick={() => {
+          dispatch(setStore(product.store.id));
+        }}
+    >
+      View Details
+      <ArrowCircleRightIcon />
+    </span>
                   </Link>
-                  <li className="productLi">
-                    Add to Wish List
-                    <span>
-                  <FavoriteIcon />
-                </span>
-                  </li>
                 </ul>
               </div>
               <div className="px-4 z-10 bg-white">
                 <div className="flex items-center justify-between">
                   <h2
                       className="font-titleFont tracking-wide text-lg text-amazon_blue
-              font-medium"
+      font-medium"
                   >
                     {product.title.substring(0, 40)}...
                   </h2>
@@ -84,15 +74,10 @@ function Products() {
                       {product.description.substring(0, 100)}...
                     </p>
                   </div>
-                  <div className="text-yellow-500">
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                    <StarIcon />
-                  </div>
                 </div>
-                <button
+
+
+              <button
                     onClick={() => {
                       dispatch(setStore(product.store.id));
                       navigate(`/product/${product.id}`);

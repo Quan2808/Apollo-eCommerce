@@ -14,5 +14,5 @@ public class UserRegisterDTO {
     private String clientName;
     private String email;
     private String password;
-
+    private String phoneNumber;
 }
