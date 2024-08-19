@@ -116,7 +116,7 @@
                                                 </div>
                                             </td>
                                             <td class="fw-bold text-end"
-                                                th:text="${orderDelivery.order.address.street + ', ' + orderDelivery.order.address.ward + ', ' + orderDelivery.order.address.district + ', ' + orderDelivery.order.address.city}"></td>
+                                                th:text="${orderDelivery.order.address.street}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -219,7 +219,7 @@
                                             <td class="fw-bold text-end">
                                                 <a href="/saul-html-pro/apps/invoices/view/invoice-3.html"
                                                    class="text-gray-600 text-hover-primary">
-                                                    <td th:text="${formattedDeliveryDate}"></td>
+                                                    <span th:text="${#dates.format(orderDelivery.order.deliveryDate, 'dd/MM/yyyy')}"></span>
                                                 </a>
                                             </td>
                                         </tr>

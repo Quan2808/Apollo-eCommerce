@@ -114,4 +114,15 @@ public class ShipperService {
             throw new RuntimeException("Error while fetching shippers: " + e.getMessage(), e);
         }
     }
+
+    public List<Map<String, Object>> getOrdersByShipperEmail(String shipperEmail) {
+        String url = API_URL + "/orderdelivery/email/" + shipperEmail;
+        ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Map<String, Object>>>() {}
+        );
+        return response.getBody();
+    }
 }

@@ -20,7 +20,7 @@
             </tr>
             <tr th:each="order : ${orders}">
                 <td th:text="${order.id}"></td>
-                <td th:text="${order.address.street + ', ' + order.address.ward + ', ' + order.address.district + ', ' + order.address.city}"></td>
+                <td th:text="${order.address.street ?: 'N/A'}"></td>
                 <td th:text="${order?.variant?.product?.title ?: 'N/A'}"></td>
                 <td th:text="${order.orderDate}"></td>
                 <td class="text-end">

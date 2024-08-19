@@ -4,10 +4,13 @@ import com.apollo.converter.*;
 import com.apollo.dto.*;
 import com.apollo.entity.*;
 import com.apollo.repository.OrderDeliveryRepository;
+import com.apollo.repository.ShipperRepository;
 import com.apollo.repository.ShopOderRepository;
 import com.apollo.repository.ShopOrderRepository;
+import com.apollo.service.EmailService;
 import com.apollo.service.OrderDeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,16 +21,12 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
 
     @Autowired
     private OrderDeliveryConverter convert;
-
     @Autowired
     private OrderDeliveryRepository orderDeliveryRepository;
-
     @Autowired
     private ShopOderRepository shopOderRepository;
-
     @Autowired
     private ShopOrderRepository shopOrderRepository;
-
     @Autowired
     private UserConverter userConverter;
     @Autowired
@@ -38,6 +37,10 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
     private PaymentMethodConverter paymentMethodConverter;
     @Autowired
     private AddressConverter addressConverter;
+    @Autowired
+    private ShipperRepository shipperRepository;
+    @Autowired
+    private EmailService emailService;
 
     public OrderDeliveryDTO saveOrderDelivery(ShopOrder shopOrder, Shipper shipper) {
         Date date = new Date();
@@ -68,7 +71,14 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
 
         orderDelivery.setStatus(newStatus);
         orderDelivery.setInducement(inducement);
-        return orderDeliveryRepository.save(orderDelivery);
+        OrderDelivery updatedOrderDelivery = orderDeliveryRepository.save(orderDelivery);
+
+        if ("COMPLETED".equalsIgnoreCase(newStatus)) {
+            User user = shopOrder.getUser();
+            emailService.sendDeliveryConfirmationEmail(user, shopOrder);
+        }
+
+        return updatedOrderDelivery;
     }
 
     public List<OrderDeliveryDTO> findAllOrderDelivery() {
@@ -82,5 +92,14 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
         OrderDelivery orderDelivery = orderDeliveryRepository.findById(orderId).get();
         OrderDeliveryDTO orderDeliveryDTO = convert.entityToDTO(orderDelivery);
         return orderDeliveryDTO;
+    }
+
+    @Override
+    public List<OrderDelivery> getOrdersByShipperEmail(String shipperEmail) {
+        Shipper shipper = shipperRepository.findByEmail(shipperEmail);
+        if (shipper == null) {
+            throw new ResourceNotFoundException("Shipper not found for this email :: " + shipperEmail);
+        }
+        return orderDeliveryRepository.findByShipper(shipper);
     }
 }

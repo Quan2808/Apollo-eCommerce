@@ -1,5 +1,6 @@
 package com.apollo.controller;
 
+import com.apollo.converter.OrderDeliveryConverter;
 import com.apollo.dto.OrderDeliveryDTO;
 import com.apollo.dto.ShopOrderDto;
 import com.apollo.entity.OrderDelivery;
@@ -23,21 +24,18 @@ import java.util.List;
 public class OrderDeliveryController {
     @Autowired
     private OrderDeliveryService orderDeliveryService;
-
     @Autowired
     private ShopOrderRepository shopOrderRepository;
-
     @Autowired
     private ShopOrderService orderService;
-
     @Autowired
     private ShipperRepository shipperRepository;
-
     @Autowired
     private ShopOrderService shopOrderService;
     @Autowired
     private OrderDeliveryRepository orderDeliveryRepository;
-
+    @Autowired
+    private OrderDeliveryConverter orderDeliveryConverter;
     @PostMapping("/submit/{id}")
     public @ResponseBody ShopOrder submitOrder(@PathVariable Long id) {
         shopOrderService.acceptOrder(id);
@@ -96,5 +94,11 @@ public class OrderDeliveryController {
     @GetMapping("/orderdelivery/{orderId}")
     public OrderDeliveryDTO getOrderDeliveryById(@PathVariable Long orderId) {
         return orderDeliveryService.findOrderDeliveryById(orderId);
+    }
+
+    @GetMapping("/orderdelivery/email/{shipperEmail}")
+    public List<OrderDeliveryDTO> getOrdersByShipperEmail(@PathVariable String shipperEmail) {
+        List<OrderDelivery> orderDeliveries = orderDeliveryService.getOrdersByShipperEmail(shipperEmail);
+        return orderDeliveryConverter.entitiesToDTOs(orderDeliveries);
     }
 }

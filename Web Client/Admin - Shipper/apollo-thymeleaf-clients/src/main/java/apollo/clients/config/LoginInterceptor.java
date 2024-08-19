@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String authParam = request.getParameter("auth");
 
         // Redirect to welcome page if trying to access login pages directly without auth param
-        if ((uri.equals("/dashboard/signin") || uri.equals("/shipper/signin")) && !"true".equals(authParam)) {
+        if ((uri.equals("/dashboard/signin") || uri.equals("/shipper/signin") || uri.equals("/shipper/register")) && !"true".equals(authParam)) {
             response.sendRedirect("/");
             return false;
         }
