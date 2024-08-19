@@ -36,18 +36,6 @@
                                     <tr>
                                         <td class="text-muted">
                                             <div class="d-flex align-items-center">
-                                                <i class="ki-duotone ki-wallet fs-2 me-2"><span
-                                                        class="path1"></span><span class="path2"></span><span
-                                                        class="path3"></span><span class="path4"></span></i>Payment
-                                                Method
-                                            </div>
-                                        </td>
-                                        <td class="fw-bold text-end" th:text="${order.paymentMethod.defaultPayment}">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">
-                                            <div class="d-flex align-items-center">
                                                 <i class="ki-duotone ki-truck fs-2 me-2"><span
                                                         class="path1"></span><span class="path2"></span><span
                                                         class="path3"></span><span class="path4"></span><span
@@ -104,9 +92,13 @@
                                     <tr>
                                         <td class="text-muted">
                                             <div class="d-flex align-items-center">
-                                                <i class="ki-duotone ki-calling fs-2 me-2"><span
-                                                        class="path1"></span><span class="path2"></span><span
-                                                        class="path3"></span><span class="path4"></span></i>Address
+                                                <i class="ki-duotone ki-calling fs-2 me-2">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                </i>
+                                                Address
                                             </div>
                                         </td>
                                         <td class="fw-bold text-end"
@@ -157,19 +149,8 @@
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
-                                <!--begin::Thumbnail-->
-                                <a href="/saul-html-pro/apps/ecommerce/sales/edit-product.html"
-                                   class="symbol symbol-50px">
-                                    <span class="symbol-label"
-                                          style="background-image:url(/saul-html-pro/assets/media//stock/ecommerce/1.png);"></span>
-                                </a>
-                                <!--end::Thumbnail-->
-
                                 <!--begin::Title-->
                                 <div class="ms-5">
-                                    <a href="/saul-html-pro/apps/ecommerce/sales/edit-product.html"
-                                       class="fw-bold text-gray-600 text-hover-primary"> <span
-                                            th:text="${order?.variant?.name ?: 'N/A'}"></span></a>
                                     <div class="fs-7 text-muted"><span th:text="${order.variant.name}"></span></div>
                                 </div>
                                 <!--end::Title-->
