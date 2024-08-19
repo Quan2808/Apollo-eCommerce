@@ -65,4 +65,40 @@ public class ShipperAuthCtrl {
             return "redirect:/shipper/signin?auth=true";
         }
     }
+
+    @GetMapping("/register")
+    public String registerForm(Model model, HttpServletRequest request) {
+        String authParam = request.getParameter("auth");
+        if (!"true".equals(authParam)) {
+            return "redirect:/";
+        }
+        model.addAttribute("shipper", new AccountDTO());
+        return authDirect + "register";
+    }
+
+    @PostMapping("/submit-register")
+    public String registerShipper(@ModelAttribute AccountDTO shipperRegisterDto, Model model) {
+        try {
+            Map<String, Object> result = service.registerShipper(
+                    shipperRegisterDto.getEmail(),
+                    shipperRegisterDto.getPassword(),
+                    shipperRegisterDto.getShipperName(),
+                    shipperRegisterDto.getPhoneNumber()
+            );
+
+            AccountDTO registeredShipper = (AccountDTO) result.get("shipper");
+
+            if (registeredShipper != null) {
+                model.addAttribute("success", "Registration successful. Please login.");
+                return "redirect:/shipper/register?success=true"; // Redirect with query parameter
+            } else {
+                model.addAttribute("error", "Registration failed: Invalid response received");
+                return "redirect:/shipper/register?error=true"; // Redirect with query parameter
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Registration failed: " + e.getMessage());
+            return "redirect:/shipper/register?error=true"; // Redirect with query parameter
+        }
+    }
+
 }

@@ -1,13 +1,18 @@
 package com.apollo.service.impl;
 
 import com.apollo.entity.Shipper;
+import com.apollo.entity.ShopOrder;
 import com.apollo.entity.User;
 import com.apollo.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -62,5 +67,46 @@ public class EmailServiceImpl implements EmailService {
         message.setSubject(subject);
         message.setText(text);
         emailSender.send(message);
+    }
+
+    @Override
+    public void sendDeliveryConfirmationEmail(User user, ShopOrder shopOrder) {
+        String recipientAddress = user.getEmail();
+        String subject = "Order Delivery Confirmation";
+
+        // Giả sử bạn đã lưu thông tin variant.name và deliveryDate trong ShopOrder hoặc một đối tượng liên quan
+        String variantName = shopOrder.getVariant() != null && shopOrder.getVariant().getName() != null
+                && !shopOrder.getVariant().getName().isEmpty()
+                ? shopOrder.getVariant().getName() : "Unknown Variant";
+
+        String deliveryDate = shopOrder.getDeliveryDate() != null
+                ? new SimpleDateFormat("dd/MM/yyyy").format(shopOrder.getDeliveryDate())
+                : "Not Available";
+
+        String message = "<html><body style='font-family: Arial, sans-serif; color: #333; line-height: 1.6;'>"
+                + "<div style='max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;'>"
+                + "<h2 style='color: #007bff;'>Hello " + user.getClientName() + ",</h2>"
+                + "<p>Your order has been successfully delivered.</p>"
+                + "<p><strong>Delivery Date:</strong> " + deliveryDate + "</p>"
+                + "<p><strong>Variant Name:</strong> " + variantName + "</p>"
+                + "<p>Thank you for shopping with us!</p>"
+                + "<p style='font-size: 0.9em; color: #666;'>Home page: <a href='http://localhost:3000' style='color: #007bff; text-decoration: none;'>Apollo Home</a></p>"
+                + "</div>"
+                + "</body></html>";
+
+        sendEmailDeli(recipientAddress, subject, message);
+    }
+
+    private void sendEmailDeli(String recipientAddress, String subject, String message) {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(recipientAddress);
+            helper.setSubject(subject);
+            helper.setText(message, true); // Set to true to indicate HTML
+            emailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send email", e);
+        }
     }
 }
