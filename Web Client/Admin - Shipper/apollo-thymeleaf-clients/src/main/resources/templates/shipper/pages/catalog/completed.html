@@ -13,14 +13,14 @@
             </tr>
             </thead>
             <tbody class="fw-semibold text-gray-600">
-            <tr th:if="${#lists.isEmpty(orders)}">
+            <tr th:if="${#lists.isEmpty(orderDeliveries)}">
                 <td colspan="5" class="text-center">NOTHING HERE</td>
             </tr>
-            <tr th:each="orderDelivery : ${orders}">
+            <tr th:each="orderDelivery : ${orderDeliveries}">
                 <td th:text="${orderDelivery.id}"></td>
                 <td th:text="${orderDelivery?.order?.address?.street ?: 'N/A'}"></td>
-                <td th:text="${orderDelivery?.order?.variant?.product?.title ?: 'N/A'}"></td>
-                <td th:text="${#dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy')}"></td>
+                <td th:text="${orderDelivery?.order?.variant?.name ?: 'N/A'}"></td>
+                <td th:text="${orderDelivery.assignedDate}"></td>
                 <td class="text-end">
                     <a th:href="@{/shipper/detail-completed/{orderId}(orderId=${orderDelivery.id})}">
                         <button type="submit" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center">

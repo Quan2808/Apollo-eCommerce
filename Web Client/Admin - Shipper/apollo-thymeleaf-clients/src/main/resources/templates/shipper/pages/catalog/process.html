@@ -19,8 +19,8 @@
             <tr th:each="orderDelivery : ${orderDeliveries}">
                 <td th:text="${orderDelivery.id}"></td>
                 <td th:text="${orderDelivery?.order?.address?.street ?: 'N/A'}"></td>
-                <td th:text="${orderDelivery?.order?.variant?.product?.title ?: 'N/A'}"      ></td>
-                <td th:text="${#dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy')}"></td>
+                <td th:text="${orderDelivery?.order?.variant?.name ?: 'N/A'}"      ></td>
+                <td th:text="${orderDelivery.assignedDate}"></td>
                 <td class="text-end">
                     <a th:href="@{/shipper/detail-delivery/{orderId}(orderId=${orderDelivery.id})}">
                         <button type="submit" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center">
