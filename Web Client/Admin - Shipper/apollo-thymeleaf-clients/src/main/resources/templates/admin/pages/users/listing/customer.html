@@ -51,7 +51,7 @@
                     <th class="min-w-125px">Customer Name</th>
                     <th class="min-w-125px">Email</th>
                     <th class="min-w-125px text-center">Status</th>
-                    <th class="min-w-125px text-center">Orders</th>
+                    <th class="min-w-125px text-center"></th>
                     <th class="text-center min-w-70px">Actions</th>
                     <th></th>
                 </tr>
@@ -66,7 +66,8 @@
                         <span th:if="${i.enabled}" class="badge badge-light-success">Verified</span>
                         <span th:unless="${i.enabled}" class="badge badge-light-danger">Unconfirmed</span>
                     </td>
-                    <td class="text-center" th:text="${i.shopOrders.size()}"></td>
+<!--                    <td class="text-center" th:text="${i.shopOrders.size()}"></td>-->
+                    <td></td>
                     <td class="text-center">
                         <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">

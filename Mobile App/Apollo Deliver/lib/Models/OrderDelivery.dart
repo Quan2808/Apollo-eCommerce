@@ -24,7 +24,7 @@ class OrderDelivery {
       order: json['order'] != null ? ShopOrder.fromJson(json['order']) : null,
       shipper: json['shipper'] != null ? Shipper.fromJson(json['shipper']) : null,
       assignedDate: json['assignedDate'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(json['assignedDate'])
+          ? DateTime.parse(json['assignedDate'])
           : null,
       status: json['status'],
       inducement: json['inducement'],
