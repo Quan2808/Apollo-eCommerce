@@ -3,6 +3,7 @@ package apollo.clients.controller.admin.user;
 import apollo.clients.controller.admin.AdminController;
 import apollo.clients.dto.auth.AccountDTO;
 import apollo.clients.service.AuthenticationService;
+import apollo.clients.service.shipper.ShipperService;
 import apollo.clients.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,14 +17,14 @@ import java.util.Map;
 public class UserManagerCtrl {
 
     private static final String usersDirect = "admin/pages/users/";
-
     private final AuthenticationService authenticationService;
-
     private final UserService userService;
+    private final ShipperService shipperService;
 
-    public UserManagerCtrl(AuthenticationService authenticationService, UserService userService) {
+    public UserManagerCtrl(AuthenticationService authenticationService, UserService userService, ShipperService shipperService) {
         this.authenticationService = authenticationService;
         this.userService = userService;
+        this.shipperService = shipperService;
     }
 
     @GetMapping("/{type}")
@@ -60,6 +61,18 @@ public class UserManagerCtrl {
             model.addAttribute("error", "Registration failed: " + e.getMessage());
             return getUsersList("admin", model);
         }
+    }
+
+    @GetMapping("/ordersdelivery/{shipperEmail}")
+    public String getOrdersByShipperEmail(@PathVariable String shipperEmail, Model model) {
+        List<Map<String, Object>> orders = shipperService.getOrdersByShipperEmail(shipperEmail);
+
+        model.addAttribute("ordersdelivery", orders);
+        model.addAttribute("shipperEmail", shipperEmail);
+        String viewName = "admin/pages/users/details/showdelivery";
+        String pageTitle = "Orders Delivery for " + shipperEmail;
+        String[] breadcrumb = { "Users", "Orders Delivery" };
+        return AdminController.renderView(model, viewName, pageTitle, breadcrumb);
     }
 
 /*

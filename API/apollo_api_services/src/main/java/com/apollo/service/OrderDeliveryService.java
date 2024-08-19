@@ -12,4 +12,5 @@ public interface OrderDeliveryService {
     OrderDelivery changeStatus(Long orderId, String newStatus, String inducement);
     List<OrderDeliveryDTO> findAllOrderDelivery();
     OrderDeliveryDTO findOrderDeliveryById(Long orderId);
+    List<OrderDelivery> getOrdersByShipperEmail(String shipperEmail);
 }
