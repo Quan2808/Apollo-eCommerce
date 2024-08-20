@@ -78,12 +78,12 @@
                                             <div th:case="*" class="badge badge-light-secondary" th:text="${i.status}"></div>
                                         </div>
                                     </td>
-<!--                                    <td class="text-end pe-0">-->
-<!--                                        <span class="fw-bold" th:text="'$ ' + ${#numbers.formatDecimal(i.orderTotal, 0, 'COMMA', 2, 'POINT')}"></span>-->
-<!--                                    </td>-->
-<!--                                    <td class="text-end" th:data-order="${#dates.format(i.deliveryDate, 'dd/MM/yyyy  HH:mm')}" style="display: none;">-->
-<!--                                        <span class="fw-bold" th:text="${#dates.format(i.deliveryDate, 'dd/MM/yyyy  HH:mm')}" type="hidden"></span>-->
-<!--                                    </td>-->
+                                    <td class="text-end pe-0">
+                                        <span class="fw-bold" th:text="'$ ' + ${#numbers.formatDecimal(i.orderTotal, 0, 'COMMA', 2, 'POINT')}"></span>
+                                    </td>
+                                    <td class="text-end" th:data-order="${i.deliveryDate}">
+                                        <span class="fw-bold" th:text="${i.deliveryDate}"></span>
+                                    </td>
                                 </tr>
 
                                 </tbody>
@@ -94,36 +94,45 @@
                                 >View all...</a>
                             </div>
                             <div class="d-flex flex-wrap pt-5">
-                                <div class="d-flex flex-column me-7 me-lg-16">
+                                <!-- First Row -->
+                                <div class="status-item me-7 me-lg-16 mb-3">
                                     <div class="d-flex align-items-center mb-3">
                                         <span class="bullet bullet-dot bg-primary me-2 h-10px w-10px"></span>
-                                        <span class="fw-bold text-gray-600 fs-6">Accepted</span>
+                                        <span class="fw-bold text-gray-600 fs-6">Accepted:</span>
+                                        <span id="acceptedCount" class="fw-bold text-gray-800 fs-6 count-spacing">0</span>
                                     </div>
                                     <div class="d-flex align-items-center mb-3">
                                         <span class="bullet bullet-dot" style="background-color: #6f42c1; height: 10px; width: 10px; display: inline-block; border-radius: 50%;"></span>
-                                        <span class="fw-bold text-gray-600 fs-6">&nbsp; Ongoing</span>
+                                        <span class="fw-bold text-gray-600 fs-6">Ongoing:</span>
+                                        <span id="ongoingCount" class="fw-bold text-gray-800 fs-6 count-spacing">0</span>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column me-7 me-lg-16">
 
-                                    <div class="d-flex align-items-center">
+                                <div class="status-item me-7 me-lg-16 mb-3">
+                                    <div class="d-flex align-items-center mb-3">
                                         <span class="bullet bullet-dot bg-danger me-2 h-10px w-10px"></span>
-                                        <span class="fw-bold text-gray-600 fs-6">Cancel</span>
+                                        <span class="fw-bold text-gray-600 fs-6">Cancel:</span>
+                                        <span id="cancelCount" class="fw-bold text-gray-800 fs-6 count-spacing">0</span>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <span class="bullet bullet-dot bg-warning me-2 h-10px w-10px"></span>
+                                        <span class="fw-bold text-gray-600 fs-6">Pending:</span>
+                                        <span id="pendingCount" class="fw-bold text-gray-800 fs-6 count-spacing">0</span>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column me-7 me-lg-16">
+
+                                <!-- Second Row -->
+                                <div class="status-item me-7 me-lg-16">
                                     <div class="d-flex align-items-center mb-3">
                                         <span class="bullet bullet-dot bg-success me-2 h-10px w-10px"></span>
-                                        <span class="fw-bold text-gray-600 fs-6">Complete</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column">
-                                    <div class="d-flex align-items-center">
-                                        <span class="bullet bullet-dot bg-warning me-2 h-10px w-10px"></span>
-                                        <span class="fw-bold text-gray-600 fs-6">Pending</span>
+                                        <span class="fw-bold text-gray-600 fs-6">Complete:</span>
+                                        <span id="completedCount" class="fw-bold text-gray-800 fs-6 count-spacing">0</span>
                                     </div>
                                 </div>
                             </div>
+
+
+
                         </div>
                         <div class="tab-pane fade" id="kt_chart_widget_8_week_tab" role="tabpanel">
                             <div class="mb-5">
@@ -142,6 +151,52 @@
                         </div>
                     </div>
                 </div>
+                <!--Count Accept,pending-->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Initialize counts
+                        let acceptedCount = 0;
+                        let ongoingCount = 0;
+                        let cancelCount = 0;
+                        let completedCount = 0;
+                        let pendingCount = 0;
+
+                        // Get all rows from the table body
+                        const rows = document.querySelectorAll('#orderTable tr');
+
+                        rows.forEach(row => {
+                            // Get status from data-order attribute
+                            const status = row.querySelector('td[data-order]').getAttribute('data-order');
+
+                            // Increment the count based on the status
+                            switch (status) {
+                                case 'PENDING':
+                                    pendingCount++;
+                                    break;
+                                case 'ACCEPTED':
+                                    acceptedCount++;
+                                    break;
+                                case 'ONGOING':
+                                    ongoingCount++;
+                                    break;
+                                case 'COMPLETED':
+                                    completedCount++;
+                                    break;
+                                case 'CANCEL':
+                                    cancelCount++;
+                                    break;
+                            }
+                        });
+
+                        // Update the count elements in the summary section
+                        document.getElementById('acceptedCount').textContent = acceptedCount;
+                        document.getElementById('ongoingCount').textContent = ongoingCount;
+                        document.getElementById('cancelCount').textContent = cancelCount;
+                        document.getElementById('completedCount').textContent = completedCount;
+                        document.getElementById('pendingCount').textContent = pendingCount;
+                    });
+                </script>
+
                 <!--Chart-->
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -153,9 +208,11 @@
                             const totalCell = row.querySelector('td:nth-child(4) span');
 
                             if (dateCell && totalCell) {
-                                const fullDate = dateCell.textContent.trim().split(' ')[0]; // Lấy chỉ phần ngày
+                                const fullDate = dateCell.textContent.trim(); // Lấy toàn bộ chuỗi ngày giờ
                                 if (fullDate && fullDate !== 'null') {
-                                    const [day, month, year] = fullDate.split('/');
+                                    const dateObject = new Date(fullDate); // Chuyển chuỗi ngày giờ thành đối tượng Date
+                                    const day = String(dateObject.getUTCDate()).padStart(2, '0');
+                                    const month = String(dateObject.getUTCMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0 nên cần cộng thêm 1
                                     const dateKey = `${day}/${month}`; // Định dạng dd/mm
                                     const orderTotal = parseFloat(totalCell.textContent.trim().replace('$', '').replace(/,/g, ''));
 
@@ -204,6 +261,7 @@
                         const totalAmount = data.reduce((sum, value) => sum + value, 0);
                         document.getElementById('totalAmountChart').textContent = totalAmount.toFixed(2);
                     });
+
                 </script>
 
                 <!--All Dashboard-->
@@ -233,6 +291,8 @@
                         document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
                     });
                 </script>
+
+
 
             </div>
         </div>
@@ -293,7 +353,8 @@
                                     <thead>
                                     <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
                                         <th class="p-0 pb-3 min-w-50px text-start">NO</th>
-                                        <th class="p-0 pb-3 min-w-100px pe-13">NAME</th>
+                                        <th class="p-0 pb-3 min-w-100px text-center pe-13">NAME</th>
+                                        <th class="p-0 pb-3 w-50px text-center">PHONE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -316,7 +377,13 @@
                                                 <span class="text-gray-400 fw-semibold d-block fs-7" th:text="${i.email}"></span>
                                             </div>
                                         </td>
+
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -329,7 +396,8 @@
                                     <thead>
                                     <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
                                         <th class="p-0 pb-3 min-w-50px text-start">NO</th>
-                                        <th class="p-0 pb-3 min-w-100px pe-13">NAME</th>
+                                        <th class="p-0 pb-3 min-w-100px text-center pe-13">NAME</th>
+                                        <th class="p-0 pb-3 w-50px text-center">PHONE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -337,7 +405,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="d-flex justify-content-center flex-column">
-                                                    <a th:href="@{'/dashboard/users/shipper'}"
+                                                    <a th:href="@{'/dashboard/users/customer'}"
                                                        class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
                                                        th:text="${i.id}"></a>
                                                 </div>
@@ -345,13 +413,23 @@
                                         </td>
                                         <td class="text-start pe-13">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a th:href="@{'/dashboard/users/shipper' }"
+                                                <a th:href="@{'/dashboard/users/customer' }"
                                                    class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
                                                    th:text="${i.clientName}"></a>
                                                 <span class="text-gray-400 fw-semibold d-block fs-7" th:text="${i.email}"></span>
                                             </div>
                                         </td>
+
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center flex-column">
+                                                <a th:href="@{'/dashboard/users/customer/' + ${i.phoneNumber}}"
+                                                   class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
+                                                   th:text="${i.phoneNumber}"></a>
+                                            </div>
+                                        </td>
+                                        <td></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -363,7 +441,8 @@
                                     <thead>
                                     <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
                                         <th class="p-0 pb-3 min-w-50px text-start">NO</th>
-                                        <th class="p-0 pb-3 min-w-100px pe-13">NAME</th>
+                                        <th class="p-0 pb-3 min-w-100px text-center pe-13">NAME</th>
+                                        <th class="p-0 pb-3 w-50px text-center">PHONE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -385,7 +464,17 @@
                                                 <span class="text-gray-400 fw-semibold d-block fs-7" th:text="${i.email}"></span>
                                             </div>
                                         </td>
+
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center flex-column">
+                                                <a th:href="@{'/dashboard/users/customer/' + ${i.phoneNumber}}"
+                                                   class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6"
+                                                   th:text="${i.phoneNumber}"></a>
+                                            </div>
+                                        </td>
+                                        <td></td>
                                     </tr>
+
                                     </tbody>
                                 </table>
                             </div>

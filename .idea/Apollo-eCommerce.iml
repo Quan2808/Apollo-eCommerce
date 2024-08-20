@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Deliver/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Deliver/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Deliver/build" />
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Shop/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Shop/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/Mobile App/Apollo Shop/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
