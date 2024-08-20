@@ -110,7 +110,7 @@
                                             </div>
                                         </td>
                                         <td class="fw-bold text-end"
-                                            th:text="${order.address.street + ', ' + order.address.ward + ', ' + order.address.district + ', ' + order.address.city}">
+                                            th:text="${order.address.street}">
                                         </td>
                                     </tr>
                                     </tbody>
@@ -169,7 +169,7 @@
                                 <div class="ms-5">
                                     <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"
                                        class="fw-bold text-gray-600 text-hover-primary"> <span
-                                            th:text="${order?.variant?.product?.title ?: 'N/A'}"></span></a>
+                                            th:text="${order?.variant?.name ?: 'N/A'}"></span></a>
                                     <div class="fs-7 text-muted"><span th:text="${order.variant.name}"></span></div>
                                 </div>
                                 <!--end::Title-->

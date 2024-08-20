@@ -28,6 +28,10 @@
                                placeholder="Category name"/>
                         <div class="text-muted fs-7">A category name is required and recommended to be unique.</div>
                     </div>
+                    <!-- Hiển thị lỗi chung nếu có -->
+                    <div th:if="${error}" class="alert alert-danger mt-3">
+                        <span th:text="${error}"></span>
+                    </div>
                 </div>
             </div>
 

@@ -27,7 +27,8 @@ import storeCategoryReducer from "../features/variant/storeCategorySlide"
 import optionReducer from "../features/variant/optionSlide"
 import optionValueReducer from "../features/variant/optionValueSlide"
 import paymentReducer from "../features/payment/paymentSlice";
-import imageReducer from "../features/variant/ImageSlide"
+import imageReducer from "../features/variant/ImageSlide";
+import searchReducer from '../features/search/searchSlice';
 
 
 const persistConfig = {
@@ -67,6 +68,7 @@ export const store = configureStore({
     optionValue: optionValueReducer,
     payment: paymentReducer,
     image: imageReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

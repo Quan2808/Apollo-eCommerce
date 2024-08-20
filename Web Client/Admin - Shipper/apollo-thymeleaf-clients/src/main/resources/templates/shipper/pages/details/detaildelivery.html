@@ -116,7 +116,7 @@
                                                 </div>
                                             </td>
                                             <td class="fw-bold text-end"
-                                                th:text="${orderDelivery.order.address.street + ', ' + orderDelivery.order.address.ward + ', ' + orderDelivery.order.address.district + ', ' + orderDelivery.order.address.city}"></td>
+                                                th:text="${orderDelivery.order.address.street}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -199,7 +199,7 @@
                                             <td class="fw-bold text-end">
                                                 <a href="/saul-html-pro/apps/invoices/view/invoice-3.html"
                                                    class="text-gray-600 text-hover-primary">
-                                                    <span th:text="${#dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy')}"></span>
+                                                    <span th:text="${orderDelivery.assignedDate != null ? #dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy') : 'N/A'}"></span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -261,7 +261,7 @@
                                 <div class="ms-5">
                                     <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"
                                        class="fw-bold text-gray-600 text-hover-primary"> <span
-                                            th:text="${orderDelivery?.order?.variant?.product?.title ?: 'N/A'}"></span></a>
+                                            th:text="${orderDelivery?.order?.variant?.name ?: 'N/A'}"></span></a>
                                     <div class="fs-7 text-muted"><span
                                             th:text="${orderDelivery.order.variant.name}"></span></div>
                                 </div>

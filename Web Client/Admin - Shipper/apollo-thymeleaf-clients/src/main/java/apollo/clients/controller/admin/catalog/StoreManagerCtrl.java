@@ -119,9 +119,19 @@ public class StoreManagerCtrl {
                     storeRequest.getDealsSquareImage(), storeRequest.getInteractiveImage(), storeRequest.getLogo());
 
             return "redirect:/dashboard/catalog/stores";
-        } catch (Exception e) {
+        }catch (DuplicateStoreNameException e) {
+            // Thêm thông báo lỗi nếu tên cửa hàng bị trùng
+            model.addAttribute("nameError", "Store name already exists: " + storeRequest.getName());
+            return newStoreForm(model); // Trả về form tạo mới cùng thông báo lỗi
+        }catch (Exception e) {
             model.addAttribute("error", "Create new store failed: " + e.getMessage());
             return newStoreForm(model);
+        }
+    }
+
+    public class DuplicateStoreNameException extends RuntimeException {
+        public DuplicateStoreNameException(String message) {
+            super(message);
         }
     }
 

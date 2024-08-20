@@ -41,10 +41,10 @@ function HeaderBottom() {
           <MenuIcon />
           All
         </li>
-        <li className="headerHover hidden md:inline-flex">Today's Deal</li>
-        <li className="headerHover hidden md:inline-flex">Customer Service</li>
-        <li className="headerHover hidden md:inline-flex">Gift Cards</li>
-        <li className="headerHover hidden md:inline-flex">Registry</li>
+
+        <Link to="https://tarot-ai-apollo-bui-tran-anh-tri.vercel.app/">
+          <li className="headerHover hidden md:inline-flex">AI Tarot Game</li>
+        </Link>
         <Link to="/admin"><li className="headerHover hidden md:inline-flex">Admin</li></Link>
       </ul>
       {/* ListItem end */}
