@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}"></title>
+    <div th:replace="~{admin/fragments/components/_styles}"></div>
+    <style>
+        .invalid-feedback {
+            color: red;
+            font-size: 0.875em;
+        }
+        .success-message {
+            color: green;
+            font-size: 1.125em;
+        }
+    </style>
+</head>
+
+<body id="kt_body" class="app-blank">
+<div class="d-flex flex-column flex-root" id="kt_app_root">
+    <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+        <div class="d-flex flex-column flex-lg-row-fluid py-10">
+            <div class="d-flex flex-center flex-column flex-column-fluid">
+                <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+
+                    <!-- Logo icon -->
+                    <div class="text-center mb-5">
+                        <img src="/media/logos/logoadmin.png" alt="Logo" class="img-fluid" style="max-width: 300px;">
+                    </div>
+                    <!-- End of logo icon -->
+
+                    <!-- Thông báo thành công -->
+                    <div id="success-message" class="alert alert-success" style="display: none;" role="alert">
+                        <p id="success-text"></p>
+                    </div>
+
+                    <!-- Thông báo lỗi -->
+                    <div id="error-message" class="alert alert-danger" style="display: none;" role="alert">
+                        <p id="error-text"></p>
+                    </div>
+
+                    <form class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate"
+                          id="kt_sign_up_form" th:action="@{/shipper/submit-register}" method="post">
+
+                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                            <label class="form-label fs-6 fw-bold text-gray-900">Full Name</label>
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="shipperName"
+                                   autocomplete="off" required minlength="3">
+                            <div class="invalid-feedback">Name must be at least 3 characters long</div>
+                        </div>
+
+                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                            <label class="form-label fs-6 fw-bold text-gray-900">Email</label>
+                            <input class="form-control form-control-lg form-control-solid" type="email" name="email"
+                                   autocomplete="off" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com">
+                            <div class="invalid-feedback">Email must be a valid @gmail.com address</div>
+                        </div>
+
+                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                            <label class="form-label fs-6 fw-bold text-gray-900">Password</label>
+                            <input class="form-control form-control-lg form-control-solid" type="password"
+                                   name="password" autocomplete="off" required
+                                   pattern="(?=.*\d)(?=.*[A-Z])(?=.*[@#$%^&+=]).{6,}">
+                            <div class="invalid-feedback">Password must start with an uppercase letter, include at least one number, one special character, and be at least 6 characters long</div>
+                        </div>
+
+                        <div class="fv-row mb-10 fv-plugins-icon-container">
+                            <label class="form-label fs-6 fw-bold text-gray-900">Phone Number</label>
+                            <input class="form-control form-control-lg form-control-solid" type="tel" name="phone"
+                                   autocomplete="off" required pattern="\d{9,12}">
+                            <div class="invalid-feedback">Phone number must be between 9 and 12 digits</div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" id="kt_sign_up_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                                <span class="indicator-label">Register</span>
+                                <span class="indicator-progress">Please wait... <span
+                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Liên kết đến trang đăng nhập -->
+                    <div class="text-center mt-4">
+                        <p class="text-gray-600">Already have an account?</p>
+                        <button class="btn" onclick="redirectTo('/shipper/signin?auth=true')">Login</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//Validation Js-->
+<script>
+    document.getElementById('kt_sign_up_form').addEventListener('submit', function(event) {
+        var shipperName = document.querySelector('input[name="shipperName"]').value;
+        var email = document.querySelector('input[name="email"]').value;
+        var password = document.querySelector('input[name="password"]').value;
+        var phone = document.querySelector('input[name="phone"]').value;
+
+        var nameRegex = /^.{3,}$/; // Tên có ít nhất 3 ký tự
+        var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/; // Email phải có đuôi @gmail.com
+        var passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%^&+=]).{6,}$/; // Mật khẩu có ít nhất một số, một chữ hoa, một ký tự đặc biệt, và độ dài tối thiểu 6 ký tự
+        var phoneRegex = /^\d{9,12}$/; // Số điện thoại có độ dài từ 9 đến 12 ký tự
+
+        var isValid = true;
+        var errorMessage = '';
+
+        if (!nameRegex.test(shipperName)) {
+            isValid = false;
+            errorMessage += 'Name must be at least 3 characters long.\n';
+            document.querySelector('input[name="shipperName"]').nextElementSibling.style.display = 'block';
+        } else {
+            document.querySelector('input[name="shipperName"]').nextElementSibling.style.display = 'none';
+        }
+
+        if (!emailRegex.test(email)) {
+            isValid = false;
+            errorMessage += 'Email must be a valid @gmail.com address.\n';
+            document.querySelector('input[name="email"]').nextElementSibling.style.display = 'block';
+        } else {
+            document.querySelector('input[name="email"]').nextElementSibling.style.display = 'none';
+        }
+
+        if (!passwordRegex.test(password)) {
+            isValid = false;
+            errorMessage += 'Password must start with an uppercase letter, include at least one number, one special character, and be at least 6 characters long.\n';
+            document.querySelector('input[name="password"]').nextElementSibling.style.display = 'block';
+        } else {
+            document.querySelector('input[name="password"]').nextElementSibling.style.display = 'none';
+        }
+
+        if (!phoneRegex.test(phone)) {
+            isValid = false;
+            errorMessage += 'Phone number must be between 9 and 12 digits.\n';
+            document.querySelector('input[name="phone"]').nextElementSibling.style.display = 'block';
+        } else {
+            document.querySelector('input[name="phone"]').nextElementSibling.style.display = 'none';
+        }
+
+        if (!isValid) {
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('error-text').innerText = errorMessage;
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Display success message if query parameter 'success' is present
+        if (window.location.search.includes('success=true')) {
+            showSuccessMessage('Registration successful. Please login.');
+        }
+
+        // Display error message if query parameter 'error' is present
+        if (window.location.search.includes('error=true')) {
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('error-text').innerText = 'Registration failed. Please try again.';
+        }
+    });
+
+
+    function showSuccessMessage(message) {
+        document.getElementById('success-message').style.display = 'block';
+        document.getElementById('success-text').innerText = message;
+    }
+
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
+<div th:replace="~{admin/fragments/components/_scripts}"></div>
+<script th:src="@{/js/custom/authentication.js}"></script>
+
+</body>
+</html>

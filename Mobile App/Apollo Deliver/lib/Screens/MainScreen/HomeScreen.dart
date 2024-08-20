@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       DeliveryService service = DeliveryService(widget.token);
       List<ShopOrder> fetchedOrders = await service.getAllOrders();
+      print('Fetched Orders: $fetchedOrders'); // Debug line
       List<ShopOrder> acceptedOrders = fetchedOrders.where((order) => order.status == 'ACCEPTED').toList();
+      print('Accepted Orders: $acceptedOrders'); // Debug line
       setState(() {
         acceptedOrdersCount = acceptedOrders.length;
       });
@@ -46,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       DeliveryService service = DeliveryService(widget.token);
       List<OrderDelivery> fetchedDeliveries = await service.getAllOrderDeliveries();
+      print('Fetched Deliveries: $fetchedDeliveries'); // Debug line
       List<OrderDelivery> pendingDeliveries = fetchedDeliveries.where((delivery) => delivery.status == 'PENDING').toList();
+      print('Pending Deliveries: $pendingDeliveries'); // Debug line
       setState(() {
         pendingDeliveriesCount = pendingDeliveries.length;
       });
@@ -66,11 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           centerTitle: true,
         ),
-        body: Center( // Center toàn bộ body
+        body: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Căn giữa theo chiều dọc
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildCard('Total New Orders', acceptedOrdersCount, () {
                   Navigator.push(
@@ -109,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(24.0), // Tăng padding để thẻ lớn hơn
+          padding: const EdgeInsets.all(24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

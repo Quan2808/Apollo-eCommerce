@@ -36,11 +36,22 @@
                 </div>
             </div>
             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-
+                <div class="w-100 mw-150px">
+                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+                            data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                        <option></option>
+                        <option value="all">All</option>
+                        <option value="published">Published</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
                 <a th:href="@{/dashboard/catalog/products/new}" class="btn btn-primary">Add Product</a>
             </div>
         </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
         <div class="card-body pt-0">
+            <!--begin::Table-->
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
                 <thead>
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
@@ -48,9 +59,10 @@
                     <th class="min-w-200px">Product</th>
                     <th class="text-end min-w-100px">Category</th>
                     <th class="text-end min-w-100px">Store</th>
+                    <th class="text-end min-w-100px">Status</th>
                     <th></th>
                     <th></th>
-                    <th></th>
+<!--                    <th class="text-end min-w-70px">Actions</th>-->
                 </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
@@ -75,9 +87,12 @@
                     <td class="text-end pe-0">
                         <span class="fw-bold" th:text="${i.store.name}"></span>
                     </td>
-
-
-                    <td></td>
+                    <td class="text-end pe-0" th:data-order="${i.status}">
+                        <div th:if="${i.status == 'published'}" class="badge badge-light-success text-uppercase"
+                             th:text="${i.status}"></div>
+                        <div th:if="${i.status != 'published'}" class="badge badge-light-danger text-uppercase"
+                             th:text="${i.status}"></div>
+                    </td>
 
                     <td class="text-end">
 <!--                        <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"-->
@@ -103,10 +118,8 @@
                         </div>
                         <!--end::Menu-->
                     </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>

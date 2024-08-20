@@ -1,6 +1,5 @@
 <th:block th:fragment="styles"></th:block>
 <th:block th:fragment="scripts"></th:block>
-
 <section th:fragment="content">
     <!--begin::Content-->
     <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -29,26 +28,37 @@
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-calendar fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Order Date
+                                                    <i class="ki-duotone ki-calendar fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span></i>Order
+                                                    Date
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.orderDate}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.orderDate}"></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-wallet fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>Payment Method
+                                                    <i class="ki-duotone ki-wallet fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span><span
+                                                            class="path3"></span><span class="path4"></span></i>Payment
+                                                    Method
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.paymentMethod?.cartNumber}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.paymentMethod.defaultPayment}"></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-truck fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>Shipping Method
+                                                    <i class="ki-duotone ki-truck fs-2 me-2"><span class="path1"></span><span
+                                                            class="path2"></span><span class="path3"></span><span
+                                                            class="path4"></span><span class="path5"></span></i>Shipping
+                                                    Method
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.shippingMethod?.name}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.shippingMethod.name}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -59,6 +69,7 @@
                         </div>
                     </div>
                     <!--end::Order details-->
+
                     <!--begin::Customer details-->
                     <div class="col-xl-4">
                         <div class="card card-flush py-4 h-100">
@@ -78,26 +89,34 @@
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-profile-circle fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>Customer
+                                                    <i class="ki-duotone ki-profile-circle fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span><span
+                                                            class="path3"></span></i>Customer
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.user?.clientName}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.user.clientName}"></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-sms fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Email
+                                                    <i class="ki-duotone ki-sms fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span></i>Email
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.user?.email}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.user.email}"></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-phone fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>Address
+                                                    <i class="ki-duotone ki-phone fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span><span
+                                                            class="path3"></span><span class="path4"></span></i>Address
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end" th:text="${orderDelivery?.order?.address?.street + ', ' + orderDelivery?.order?.address?.ward + ', ' + orderDelivery?.order?.address?.district + ', ' + orderDelivery?.order?.address?.city}"></td>
+                                            <td class="fw-bold text-end"
+                                                th:text="${orderDelivery.order.address.street}"></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -108,6 +127,7 @@
                         </div>
                     </div>
                     <!--end::Customer details-->
+
                     <!--begin::Documents-->
                     <div class="col-xl-4">
                         <div class="card card-flush py-4 h-100">
@@ -127,44 +147,59 @@
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-devices fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>Invoice
-                                                    <span class="ms-1" data-bs-toggle="tooltip" title="View the invoice generated by this order.">
-                                                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                                    <i class="ki-duotone ki-devices fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span><span
+                                                            class="path3"></span><span class="path4"></span><span
+                                                            class="path5"></span></i>Invoice
+                                                    <span class="ms-1" data-bs-toggle="tooltip"
+                                                          title="View the invoice generated by this order.">
+	                                                        <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span class="path3"></span></i>
                                                         </span>
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end"><a href="/saul-html-pro/apps/invoices/view/invoice-3.html" class="text-gray-600 text-hover-primary">#<span th:text="${orderDelivery?.order?.id}"></span></a></td>
+                                            <td class="fw-bold text-end"><a
+                                                    href="/saul-html-pro/apps/invoices/view/invoice-3.html"
+                                                    class="text-gray-600 text-hover-primary">#<span
+                                                    th:text="${orderDelivery.order.id}"></span></a></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-truck fs-2 me-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>Shipping
-                                                    <span class="ms-1" data-bs-toggle="tooltip" title="View the shipping manifest generated by this order.">
-                                                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                                    <i class="ki-duotone ki-truck fs-2 me-2"><span class="path1"></span><span
+                                                            class="path2"></span><span class="path3"></span><span
+                                                            class="path4"></span><span class="path5"></span></i>Shipping
+                                                    <span class="ms-1" data-bs-toggle="tooltip"
+                                                          title="View the shipping manifest generated by this order.">
+	                                                        <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span class="path3"></span></i>
                                                         </span>
                                                 </div>
                                             </td>
-                                            <td class="fw-bold text-end"><a href="#" class="text-gray-600 text-hover-primary">#<span th:text="${orderDelivery?.id}"></span></a></td>
+                                            <td class="fw-bold text-end"><a href="#"
+                                                                            class="text-gray-600 text-hover-primary">#<span
+                                                    th:text="${orderDelivery.id}"></span></a></td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
                                                 <div class="d-flex align-items-center">
-                                                    <i class="ki-duotone ki-calendar fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Received Date
-                                                    <span class="ms-1" data-bs-toggle="tooltip" title="Reward value earned by customer when purchasing this order">
-                                                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                                    <i class="ki-duotone ki-calendar fs-2 me-2"><span
+                                                            class="path1"></span><span class="path2"></span></i>Received
+                                                    Date
+                                                    <span class="ms-1" data-bs-toggle="tooltip"
+                                                          title="Reward value earned by customer when purchasing this order">
+	                                                        <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span class="path3"></span></i>
                                                         </span>
                                                 </div>
                                             </td>
                                             <td class="fw-bold text-end">
-                                                <a href="/saul-html-pro/apps/invoices/view/invoice-3.html" class="text-gray-600 text-hover-primary">
-                                                    <div th:if="${orderDelivery != null}">
-                                                        <div th:if="${orderDelivery?.order != null}">
-                                                            <span th:if="${orderDelivery?.order?.orderDate != null}" th:text="${orderDelivery?.order?.orderDate}"></span>
-                                                            <span th:if="${orderDelivery?.order?.user != null}">
-                                                                    <span th:text="${orderDelivery?.order?.user?.clientName}"></span>
-                                                                </span>
-                                                        </div>
-                                                    </div>
+                                                <a href="/saul-html-pro/apps/invoices/view/invoice-3.html"
+                                                   class="text-gray-600 text-hover-primary">
+                                                    <span th:text="${orderDelivery.assignedDate != null ? #dates.format(orderDelivery.assignedDate, 'dd/MM/yyyy') : 'N/A'}"></span>
                                                 </a>
                                             </td>
                                         </tr>
@@ -191,10 +226,11 @@
         <!--begin::Card header-->
         <div class="card-header">
             <div class="card-title">
-                <h2>Order #<span th:text="${orderDelivery?.order?.id}"></span></h2>
+                <h2>Order #<span th:text="${orderDelivery.order.id}"></span></h2>
             </div>
         </div>
         <!--end::Card header-->
+
         <!--begin::Card body-->
         <div class="card-body pt-0">
             <div class="table-responsive">
@@ -214,92 +250,150 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <!--begin::Thumbnail-->
-                                <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
-                                    <span class="symbol-label" style="background-image:url(/saul-html-pro/assets/media//stock/ecommerce/1.png);"></span>
+                                <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"
+                                   class="symbol symbol-50px">
+                                    <span class="symbol-label"
+                                          style="background-image:url(/saul-html-pro/assets/media//stock/ecommerce/1.png);"></span>
                                 </a>
                                 <!--end::Thumbnail-->
+
                                 <!--begin::Title-->
                                 <div class="ms-5">
-                                    <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html" class="fw-bold text-gray-600 text-hover-primary">
-                                        <span th:text="${orderDelivery?.order?.variant?.product?.title ?: 'N/A'}"></span>
-                                    </a>
-                                    <div class="fs-7 text-muted"><span th:text="${orderDelivery?.order?.variant?.name}"></span></div>
+                                    <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"
+                                       class="fw-bold text-gray-600 text-hover-primary"> <span
+                                            th:text="${orderDelivery?.order?.variant?.name ?: 'N/A'}"></span></a>
+                                    <div class="fs-7 text-muted"><span
+                                            th:text="${orderDelivery.order.variant.name}"></span></div>
                                 </div>
                                 <!--end::Title-->
                             </div>
                         </td>
-                        <td class="text-end" th:text="${orderDelivery?.order?.variant?.skuCode}"> </td>
-                        <td class="text-end" th:text="${orderDelivery?.order?.quantity}"> </td>
-                        <td class="text-end"> $<span th:text="${orderDelivery?.order?.variant?.price}"></span> </td>
-                        <td class="text-end"> $<span th:text="${orderDelivery?.order?.quantity * orderDelivery?.order?.variant?.price}"></span> </td>
+                        <td class="text-end" th:text="${orderDelivery.order.variant.skuCode}">
+
+                        </td>
+                        <td class="text-end" th:text="${orderDelivery.order.quantity}">
+
+                        </td>
+                        <td class="text-end">
+                            $<span th:text="${orderDelivery.order.variant.price}"></span>
+                        </td>
+                        <td class="text-end">
+                            $<span th:text="${orderDelivery.order.quantity * orderDelivery.order.variant.price}"></span>
+                        </td>
                     </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>-->
+                    <!--                            <div class="d-flex align-items-center">-->
+                    <!--                                &lt;!&ndash;begin::Thumbnail&ndash;&gt;-->
+                    <!--                                <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"-->
+                    <!--                                   class="symbol symbol-50px">-->
+                    <!--                                    <span class="symbol-label"-->
+                    <!--                                          style="background-image:url(/saul-html-pro/assets/media//stock/ecommerce/100.png);"></span>-->
+                    <!--                                </a>-->
+                    <!--                                &lt;!&ndash;end::Thumbnail&ndash;&gt;-->
+
+                    <!--                                &lt;!&ndash;begin::Title&ndash;&gt;-->
+                    <!--                                <div class="ms-5">-->
+                    <!--                                    <a href="/saul-html-pro/apps/ecommerce/catalog/edit-product.html"-->
+                    <!--                                       class="fw-bold text-gray-600 text-hover-primary">Footwear</a>-->
+                    <!--                                    <div class="fs-7 text-muted">Delivery Date: 09/07/2024</div>-->
+                    <!--                                </div>-->
+                    <!--                                &lt;!&ndash;end::Title&ndash;&gt;-->
+                    <!--                            </div>-->
+                    <!--                        </td>-->
+                    <!--                        <td class="text-end">-->
+                    <!--                            01738002-->
+                    <!--                        </td>-->
+                    <!--                        <td class="text-end">-->
+                    <!--                            1-->
+                    <!--                        </td>-->
+                    <!--                        <td class="text-end">-->
+                    <!--                            $24.00-->
+                    <!--                        </td>-->
+                    <!--                        <td class="text-end">-->
+                    <!--                            $24.00-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
                     <tr>
-                        <td colspan="4" class="fs-3 text-gray-900 text-end"> Grand Total </td>
-                        <td class="text-gray-900 fs-3 fw-bolder text-end"> $<span th:text="${orderDelivery?.order?.orderTotal}"></span> </td>
+                        <td colspan="4" class="fs-3 text-gray-900 text-end">
+                            Grand Total
+                        </td>
+                        <td class="text-gray-900 fs-3 fw-bolder text-end">
+                            $<span th:text="${orderDelivery.order.orderTotal}"></span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
                 <!--end::Table-->
             </div>
         </div>
+        <!--end::Card body-->
+    </div>
+    <!--end::Product List-->
+    <!--begin::Actions-->
+    <div class="d-flex justify-content-end mt-3">
+        <!-- Cancel Button -->
+        <!--        <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">-->
+        <!--            Cancel-->
+        <!--        </button>-->
 
-        <!--begin::Actions-->
-        <div class="d-flex justify-content-end mt-3">
-            <!-- Cancel Button -->
-            <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal"> Cancel </button>
-            <!-- Completed Button -->
-            <button type="button" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#completedModal"> Completed </button>
-        </div>
-        <!--end::Actions-->
+        <!-- Completed Button -->
+        <button type="button" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#completedModal">
+            Completed
+        </button>
+    </div>
+    <!--end::Actions-->
 
-        <!-- Cancel Modal -->
-        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cancelModalLabel">Cancel Order</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form th:action="@{/shipper/updateOrderStatus}" th:object="${orderDeliveryDTO}" method="post">
-                        <div class="modal-body">
-                            <p>Are you sure you want to cancel this order?</p>
-                            <div class="mb-3">
-                                <label for="inducementInput" class="form-label">Inducement:</label>
-                                <input type="text" class="form-control" th:field="*{inducement}" id="inducementInput" name="inducement" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" name="orderId" th:value="${orderDelivery?.id}">
-                            <input type="hidden" name="newStatus" value="CANCEL">
-                            <button type="submit" class="btn btn-danger">Submit</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </form>
+    <!-- Cancel Modal -->
+    <!--    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel"-->
+    <!--         aria-hidden="true">-->
+    <!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <h5 class="modal-title" id="cancelModalLabel">Cancel Order</h5>-->
+    <!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+    <!--                </div>-->
+    <!--                <form th:action="@{/shipper/updateOrderStatus}" th:object="${orderDeliveryDTO}" method="post">-->
+    <!--                    <div class="modal-body">-->
+    <!--                        <p>Are you sure you want to cancel this order?</p>-->
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="inducementInput" class="form-label">Inducement:</label>-->
+    <!--                            <input type="text" class="form-control" th:field="*{inducement}" id="inducementInput"-->
+    <!--                                   name="inducement" required>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                    <div class="modal-footer">-->
+    <!--                        <input type="hidden" name="orderId" th:value="${orderDelivery.id}">-->
+    <!--                        <input type="hidden" name="newStatus" value="CANCEL">-->
+    <!--                        <button type="submit" class="btn btn-danger">Submit</button>-->
+    <!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+    <!--                    </div>-->
+    <!--                </form>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!-- Completed Modal -->
+    <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="completedModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="completedModalLabel">Complete Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Completed Modal -->
-        <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="completedModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="completedModalLabel">Complete Order</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <form th:action="@{/shipper/updateOrderStatus}" th:object="${orderDeliveryDTO}" method="post">
+                    <div class="modal-body">
+                        <p>Are you sure you want to mark this order as completed?</p>
+                        <input type="hidden" name="orderId" th:value="${orderDelivery.id}">
+                        <input type="hidden" name="newStatus" value="COMPLETED">
+                        <input type="hidden" name="inducement" value="Successfully">
                     </div>
-                    <form th:action="@{/shipper/updateOrderStatus}" method="post">
-                        <div class="modal-body">
-                            <p>Are you sure you want to mark this order as completed?</p>
-                            <input type="hidden" name="orderId" th:value="${orderDelivery?.id}">
-                            <input type="hidden" name="newStatus" value="COMPLETED">
-                            <input type="hidden" name="inducement" value="Successfully">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

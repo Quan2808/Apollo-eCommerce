@@ -48,8 +48,8 @@ public class ProductService {
     private final String OPTION_VALUE_API_URL = "http://localhost:9999/api/option-value";
     private final String VARIANT_API_URL = "http://localhost:9999/api/variant";
     private final String REVIEWS_API_URL = "http://localhost:9999/api/reviews";
+    private final String IMAGE_API_URL = "http://localhost:9999/api/image";
     private final String VARIANT_BY_ID_API_URL = "http://localhost:9999/api/variant/id";
-    // private final String IMAGE_API_URL = "http://localhost:9999/api/image";
     private final RestTemplate restTemplate;
 
     public ProductService(RestTemplate restTemplate) {
@@ -59,9 +59,8 @@ public class ProductService {
     // Fetch all products
     public List<Map<String, Object>> getProducts() {
         try {
-            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(PRODUCTS_API_URL, HttpMethod.GET,
-                    null, new ParameterizedTypeReference<List<Map<String, Object>>>() {
-                    });
+            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(PRODUCTS_API_URL, HttpMethod.GET, null, new ParameterizedTypeReference<List<Map<String, Object>>>() {
+            });
             return response.getBody();
         } catch (RestClientException e) {
             logger.error("Error fetching products", e);
@@ -102,8 +101,7 @@ public class ProductService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         try {
-            ResponseEntity<ProductDTO> response = restTemplate.postForEntity(PRODUCT_DETAIL_API_URL + "/create",
-                    requestEntity, ProductDTO.class);
+            ResponseEntity<ProductDTO> response = restTemplate.postForEntity(PRODUCT_DETAIL_API_URL + "/create", requestEntity, ProductDTO.class);
             if (response.getStatusCode() != HttpStatus.CREATED) {
                 logger.error("Failed to create product: Status code " + response.getStatusCode());
                 throw new RuntimeException("Failed to create product");
@@ -129,8 +127,7 @@ public class ProductService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         try {
-            ResponseEntity<ProductDTO> response = restTemplate.exchange(PRODUCT_DETAIL_API_URL + "/update/{id}",
-                    HttpMethod.PUT, requestEntity, ProductDTO.class, id);
+            ResponseEntity<ProductDTO> response = restTemplate.exchange(PRODUCT_DETAIL_API_URL + "/update/{id}", HttpMethod.PUT, requestEntity, ProductDTO.class, id);
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new RuntimeException("Failed to update product: Status code " + response.getStatusCode());
             }
@@ -146,8 +143,7 @@ public class ProductService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ProductDTO> requestEntity = new HttpEntity<>(productDTO, headers);
         try {
-            ResponseEntity<ProductDTO> response = restTemplate.exchange(PRODUCT_DETAIL_API_URL + "/update/{id}",
-                    HttpMethod.PUT, requestEntity, ProductDTO.class, id);
+            ResponseEntity<ProductDTO> response = restTemplate.exchange(PRODUCT_DETAIL_API_URL + "/update/{id}", HttpMethod.PUT, requestEntity, ProductDTO.class, id);
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new RuntimeException("Failed to update product: Status code " + response.getStatusCode());
             }
@@ -160,9 +156,8 @@ public class ProductService {
     // Method to fetch options by product ID
     public List<OptionTableDTO> getOptionsByProductId(Long productId) {
         try {
-            ResponseEntity<List<OptionTableDTO>> response = restTemplate.exchange(OPTION_API_URL + "/" + productId,
-                    HttpMethod.GET, null, new ParameterizedTypeReference<List<OptionTableDTO>>() {
-                    });
+            ResponseEntity<List<OptionTableDTO>> response = restTemplate.exchange(OPTION_API_URL + "/" + productId, HttpMethod.GET, null, new ParameterizedTypeReference<List<OptionTableDTO>>() {
+            });
             return response.getBody();
         } catch (RestClientException e) {
             logger.error("Error fetching options for product with ID " + productId, e);
@@ -173,10 +168,8 @@ public class ProductService {
     // Fetch Option Values by Product ID
     public List<OptionValueDTO> getOptionValuesByProductId(Long productId) {
         try {
-            ResponseEntity<List<OptionValueDTO>> response = restTemplate.exchange(
-                    OPTION_VALUE_API_URL + "/product/" + productId, HttpMethod.GET, null,
-                    new ParameterizedTypeReference<List<OptionValueDTO>>() {
-                    });
+            ResponseEntity<List<OptionValueDTO>> response = restTemplate.exchange(OPTION_VALUE_API_URL + "/product/" + productId, HttpMethod.GET, null, new ParameterizedTypeReference<List<OptionValueDTO>>() {
+            });
             return response.getBody();
         } catch (RestClientException e) {
             logger.error("Error fetching option values for product ID " + productId, e);
@@ -196,9 +189,7 @@ public class ProductService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<List<String>> requestEntity = new HttpEntity<>(valueRequest, headers);
         try {
-            ResponseEntity<OptionValueCreateResponse> response = restTemplate.exchange(
-                    OPTION_VALUE_API_URL + "/" + optionId + "/create", HttpMethod.POST, requestEntity,
-                    OptionValueCreateResponse.class);
+            ResponseEntity<OptionValueCreateResponse> response = restTemplate.exchange(OPTION_VALUE_API_URL + "/" + optionId + "/create", HttpMethod.POST, requestEntity, OptionValueCreateResponse.class);
             if (response.getStatusCode() == HttpStatus.CREATED) {
                 return response.getBody().getOptionValueDtoList();
             } else {
@@ -214,10 +205,8 @@ public class ProductService {
     // Fetch Option Values by Option ID
     public List<OptionValueDTO> getOptionValuesByOptionId(Long optionId) {
         try {
-            ResponseEntity<List<OptionValueDTO>> response = restTemplate.exchange(
-                    OPTION_VALUE_API_URL + "/option/" + optionId, HttpMethod.GET, null,
-                    new ParameterizedTypeReference<List<OptionValueDTO>>() {
-                    });
+            ResponseEntity<List<OptionValueDTO>> response = restTemplate.exchange(OPTION_VALUE_API_URL + "/option/" + optionId, HttpMethod.GET, null, new ParameterizedTypeReference<List<OptionValueDTO>>() {
+            });
             return response.getBody();
         } catch (RestClientException e) {
             logger.error("Error fetching option values for option ID " + optionId, e);
@@ -233,8 +222,7 @@ public class ProductService {
             requestBody.put("valueIdList", valueIdList);
             requestBody.put("product_id", productId);
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody);
-            ResponseEntity<VariantDTO> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
-                    VariantDTO.class);
+            ResponseEntity<VariantDTO> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, VariantDTO.class);
             return response.getBody();
         } catch (RestClientException e) {
             throw new RuntimeException("Failed to create variant", e);
@@ -285,6 +273,7 @@ public class ProductService {
         }
     }
 
+
     // Phương thức lấy Variant bằng ID
     public VariantDTO getVariantByVariantId(Long variantId) {
         try {
@@ -299,9 +288,8 @@ public class ProductService {
     // Lấy danh sách variant dựa trên product id
     public List<VariantDTO> getVariantsByProductId(Long productId) {
         try {
-            ResponseEntity<List<VariantDTO>> response = restTemplate.exchange(VARIANT_API_URL + "/product/" + productId,
-                    HttpMethod.GET, null, new ParameterizedTypeReference<List<VariantDTO>>() {
-                    });
+            ResponseEntity<List<VariantDTO>> response = restTemplate.exchange(VARIANT_API_URL + "/product/" + productId, HttpMethod.GET, null, new ParameterizedTypeReference<List<VariantDTO>>() {
+            });
             return response.getBody();
         } catch (RestClientException e) {
             logger.error("Error fetching variants for productId: " + productId, e);
@@ -325,6 +313,7 @@ public class ProductService {
         }
     }
 
+
     public ImageCreateResponse uploadImages(MultipartFile[] files, Long variantId) throws IOException {
         String apiUrl = "http://localhost:9999/api/image/create";
 
@@ -343,7 +332,8 @@ public class ProductService {
                 apiUrl,
                 HttpMethod.POST,
                 requestEntity,
-                ImageCreateResponse.class);
+                ImageCreateResponse.class
+        );
 
         return response.getBody();
     }
@@ -357,3 +347,4 @@ public class ProductService {
         return convFile;
     }
 }
+

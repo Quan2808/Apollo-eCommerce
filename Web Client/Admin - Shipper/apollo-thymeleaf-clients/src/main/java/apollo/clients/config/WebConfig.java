@@ -37,8 +37,8 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/",
-                        "/dashboard/signin", "/shipper/signin",
-                        "/dashboard/submit-signin", "/shipper/submit-login",
+                        "/dashboard/signin", "/shipper/signin", "/shipper/register",
+                        "/dashboard/submit-signin", "/shipper/submit-login", "/shipper/submit-register",
                         "/shipper/logout", "/css/**", "/js/**", "/plugins/**", "/media/**");
     }
 
