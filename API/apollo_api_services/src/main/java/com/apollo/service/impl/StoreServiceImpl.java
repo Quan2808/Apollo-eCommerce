@@ -72,6 +72,12 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreDTO createStore(Long adminId, AddStoreRequest storeDto) {
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new UsernameNotFoundException("Admin not found"));
+
+        // Kiểm tra nếu tên nhãn hàng đã tồn tại
+        if (repo.existsByName(storeDto.getName())) {
+            throw new DuplicateStoreNameException("Store name already exists: " + storeDto.getName());
+        }
+
         Store store = new Store();
         store.setName(storeDto.getName());
         store.setDealsImage(saveImage(storeDto.getDealsImage()));
@@ -82,6 +88,13 @@ public class StoreServiceImpl implements StoreService {
         store.setAdmin(admin);
         repo.save(store);
         return convert.entityToDTO(store);
+    }
+
+    // kiểm tra tên bị duplicated
+    public static class DuplicateStoreNameException extends RuntimeException {
+        public DuplicateStoreNameException(String message) {
+            super(message);
+        }
     }
 
     private String saveImage(MultipartFile image) {

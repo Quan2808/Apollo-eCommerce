@@ -18,6 +18,9 @@ import {
     getReviewByProductId, getReviewsByVariantId, selectReviewListByProductId,
 } from "../../../features/coment_review/reviewSlide";
 import FormatDate from "../../common/format/FormatDate";
+import ReviewForm from '../../reviews/ReviewForm';
+import {createReview} from "../../../api/reviewAPI";
+
 
 function ProductDetail() {
     const {id} = useParams();
@@ -26,6 +29,7 @@ function ProductDetail() {
     const [showComment, setShowComment] = useState(false);
     const storeInfo = useSelector((state) => state.adminStore.storeInfo);
     const {userInfo} = useSelector((state) => state.user);
+    const userId = userInfo?.id;
     const [variantId, setVariantId] = useState(null);
     const [productId, setProductId] = useState(id);
     const [mainImage, setMainImage] = useState("");
@@ -39,6 +43,10 @@ function ProductDetail() {
     const reviewVariantList = useSelector((state) => state.review.reviews);
     const [idArray, setIdArray] = useState([]);
     const [variantDTOListForLoop, setVariantDTOListForLoop] = useState([]);
+
+    const [star, setStar] = useState(0);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
     useEffect(() => {
         getVariantDetail();
@@ -98,6 +106,23 @@ function ProductDetail() {
         }
     };
 
+    const [isReviewFormVisible, setIsReviewFormVisible] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const review = { star, title, content };
+        try {
+            await createReview({ review, variantId, userId });
+            // Reset form fields after successful submission
+            setStar(0);
+            setTitle('');
+            setContent('');
+            alert('Review submitted successfully!');
+        } catch (e) {
+            console.error('Error submitting review:', e);
+            alert('Failed to submit review.');
+        }
+    };
     useEffect(() => {
         if (variantRender0) {
             if (variantRender0.imageDTOList && variantRender0.imageDTOList[0]) {
@@ -621,15 +646,50 @@ function ProductDetail() {
                             </div>)}
                         {/* Star Index end */}
                         <hr></hr>
-                        <h1 className="text-titleFont text-2xl font-bold">
-                            Review this product
-                        </h1>
-                        <span className="text-bodyFont text-xs mb-4">
-                Share your thoughts with other customers
-              </span>
-                        <button className=" p-1 bg-gray-300 rounded-md text-bodyFont text-xs mb-4">
-                            Write a customer review
-                        </button>
+                        <div>
+                            {/* Existing product details */}
+                            <h1 className="text-titleFont text-2xl font-bold">Review this product</h1>
+                            <span className="text-bodyFont text-xs mb-4">Share your thoughts with other customers</span>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700">Star Rating</label>
+                                    <input
+                                        type="number"
+                                        value={star}
+                                        onChange={(e) => setStar(e.target.value)}
+                                        min="1"
+                                        max="5"
+                                        required
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700">Title</label>
+                                    <input
+                                        type="text"
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value)}
+                                        required
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-sm font-medium text-gray-700">Content</label>
+                                    <textarea
+                                        value={content}
+                                        onChange={(e) => setContent(e.target.value)}
+                                        required
+                                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Submit Review
+                                </button>
+                            </form>
+                        </div>
                         <hr></hr>
                     </div>}
 
