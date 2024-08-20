@@ -156,7 +156,8 @@ public class EmailServiceImpl implements EmailService {
                 "Price per Unit ($): " + order.getVariant().getPrice() + "\n" +
                 "Delivery Date: " + order.getDeliveryDate() + "\n" +
                 "Status: " + order.getStatus() + "\n" +
-                "Shipping Address: " + formatAddress(order.getAddress()) + "\n" +
+//                "Shipping Address: " + formatAddress(order.getAddress()) + "\n" +
+                "Shipping Address: " + order.getAddress().getStreet() + "\n" +
                 "Payment Method: " + formatPaymentMethod(order.getPaymentMethod());
     }
 

@@ -81,6 +81,7 @@ public class ShipperServiceImpl implements ShipperService {
         shipper.setShipperName(shipperRegisterDto.getShipperName());
         shipper.setEmail(shipperRegisterDto.getEmail());
         shipper.setPassword(passwordEncoder.encode(password));
+        shipper.setPhoneNumber(shipperRegisterDto.getPhoneNumber());
         shipper.setRole("ROLE_".concat(Role.SHIPPER.toString()));
         shipper.setEnabled(false); // Will be enabled after email verification
         shipperRepository.save(shipper);

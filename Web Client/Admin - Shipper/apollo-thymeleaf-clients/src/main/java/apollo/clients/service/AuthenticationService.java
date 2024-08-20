@@ -49,9 +49,9 @@ public class AuthenticationService {
         return result;
     }
 
-    public Map<String, Object> registerShipper(String email, String password, String shipperName, String phone) {
+    public Map<String, Object> registerShipper(String email, String password, String shipperName, String phoneNumber) {
         String url = API_BASE_URL + "/register/shipper";
-        AccountDTO shipperRegisterDto = new AccountDTO(email, password, shipperName, phone);
+        AccountDTO shipperRegisterDto = new AccountDTO(email, password, shipperName, phoneNumber);
         ResponseEntity<AccountDTO> response = restTemplate.postForEntity(url, shipperRegisterDto, AccountDTO.class);
 
         Map<String, Object> result = new HashMap<>();

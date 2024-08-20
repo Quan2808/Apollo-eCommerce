@@ -67,7 +67,7 @@
 
                         <div class="fv-row mb-10 fv-plugins-icon-container">
                             <label class="form-label fs-6 fw-bold text-gray-900">Phone Number</label>
-                            <input class="form-control form-control-lg form-control-solid" type="tel" name="phone"
+                            <input class="form-control form-control-lg form-control-solid" type="tel" name="phoneNumber"
                                    autocomplete="off" required pattern="\d{9,12}">
                             <div class="invalid-feedback">Phone number must be between 9 and 12 digits</div>
                         </div>
@@ -98,7 +98,7 @@
         var shipperName = document.querySelector('input[name="shipperName"]').value;
         var email = document.querySelector('input[name="email"]').value;
         var password = document.querySelector('input[name="password"]').value;
-        var phone = document.querySelector('input[name="phone"]').value;
+        var phoneNumber = document.querySelector('input[name="phoneNumber"]').value;
 
         var nameRegex = /^.{3,}$/; // Tên có ít nhất 3 ký tự
         var emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/; // Email phải có đuôi @gmail.com
@@ -132,12 +132,12 @@
             document.querySelector('input[name="password"]').nextElementSibling.style.display = 'none';
         }
 
-        if (!phoneRegex.test(phone)) {
+        if (!phoneRegex.test(phoneNumber)) {
             isValid = false;
             errorMessage += 'Phone number must be between 9 and 12 digits.\n';
-            document.querySelector('input[name="phone"]').nextElementSibling.style.display = 'block';
+            document.querySelector('input[name="phoneNumber"]').nextElementSibling.style.display = 'block';
         } else {
-            document.querySelector('input[name="phone"]').nextElementSibling.style.display = 'none';
+            document.querySelector('input[name="phoneNumber"]').nextElementSibling.style.display = 'none';
         }
 
         if (!isValid) {
